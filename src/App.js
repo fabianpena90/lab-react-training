@@ -44,6 +44,12 @@ function App() {
     owner="Firstname Lastname"
     bgColor="#ddbb55"
     color="white" />
+    <Rating>0</Rating>
+    <Rating>1.49</Rating>
+    <Rating>1.5</Rating>
+    <Rating>3</Rating>
+    <Rating>4</Rating>
+    <Rating>5</Rating>
   </div>
   )
 }
@@ -100,8 +106,6 @@ function BoxColor(props) {
   )
 }
 
-
-
 function CreditCard(props) {
   return (
     <div className="IdCard box">
@@ -114,6 +118,22 @@ function CreditCard(props) {
       <p>BGColor: {props.bgColor}</p>
       <p>Color: {props.color}</p>
     </div>
+  )
+}
+
+
+
+function Rating(props) {
+  let result = ''
+  for (let i = 0; i < 5; i++){
+    if(i < Math.round(Number(props.children))) {
+      result +=  '★'
+    } else {
+      result += '☆'
+    }
+  }
+  return (
+    <p>{result}</p>
   )
 }
 
