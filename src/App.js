@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import profiles from './data/berlin.json';
 
 function App() {
   return (
@@ -50,6 +51,37 @@ function App() {
     <Rating>3</Rating>
     <Rating>4</Rating>
     <Rating>5</Rating>
+    <DriverCard
+    name="Travis Kalanick"
+    rating={4.2}
+    img="https://si.wsj.net/public/resources/images/BN-TY647_37gql_OR_20170621052140.jpg?width=620&height=428"
+    car="Toyota Corolla Altis - licensePlate: CO42DE"
+     />
+  <DriverCard
+    name="Dara Khosrowshahi"
+    rating={4.9}
+    img="https://ubernewsroomapi.10upcdn.com/wp-content/uploads/2017/09/Dara_ELT_Newsroom_1000px.jpg"
+    car="Audi A3 - BE33ER"
+    />
+    <LikeButton />
+    <LikeButton />
+
+    <ClickablePicture
+    img='/img/persons/maxence.png'
+    imgClicked='/img/persons/maxence-glasses.png'
+    />
+    <br></br>
+    <Dice />
+    <br></br>
+    <Carousel
+  imgs={[
+    'https://randomuser.me/api/portraits/women/1.jpg',
+    'https://randomuser.me/api/portraits/men/1.jpg',
+    'https://randomuser.me/api/portraits/women/2.jpg',
+    'https://randomuser.me/api/portraits/men/2.jpg'
+  ]}
+/>
+    <NumbersTable limit={90} />
   </div>
   )
 }
@@ -101,7 +133,8 @@ function BoxColor(props) {
     bank="BNP"
     owner="Maxence Bouret"
     bgColor="#11aa99"
-    color="white" /></h3>
+    color="white" />
+    </h3>
     </div>
   )
 }
@@ -136,5 +169,134 @@ function Rating(props) {
     <p>{result}</p>
   )
 }
+
+function DriverCard(props) {
+  return(
+    <div className="IdCard box">
+      <p>{props.name}</p>
+      <img src={props.img} alt='Card Pic'/>
+      <p><Rating>{props.rating}</Rating> </p>
+      <p>{props.car}</p>
+    </div>
+  )
+}
+
+function LikeButton() {
+  let [countClick, setClickCount] = useState(0);
+ 
+  let colors = ['purple','blue','green','yellow','orange','red']
+  let random = Math.floor(Math.random() * colors.length)
+
+  let counter = () => {
+    setClickCount(countClick + 1);
+  };
+  return (
+    <div>
+      <button style={{backgroundColor: `${colors[random]}`}} onClick={counter}>{countClick} Likes</button>
+    </div>
+  );
+}
+
+function ClickablePicture(props) {
+  const imgNoGlasses = 'img/persons/maxence.png',
+  imgGlasses = 'img/persons/maxence-glasses.png';
+  const [img, setImg] = useState(imgNoGlasses);
+  function imgSwap() {
+    if (img === imgNoGlasses) {
+      setImg(imgGlasses)
+    } else {
+      setImg(imgNoGlasses)
+    }
+  }
+  return (
+    <img onClick={imgSwap}
+    src={img}
+    alt='man that equips/dequips glasses when clicked'
+    style={{cursor: 'pointer', height: '100px'}}></img>
+  )
+}
+
+function Dice() {
+  const [dice, setDice] = useState(1);
+  let randomDice;
+  const handleDice = () => {
+    randomDice = Math.floor(Math.random() * (6 - 1) + 1);
+    setDice('-empty');
+    setTimeout(() => {
+      setDice(randomDice);
+    }, 1000);
+  };
+  return (
+    <div>
+      <img src={`./img/dice` + dice + '.png'} alt="dice" onClick={() => handleDice()} />
+    </div>
+  );
+}
+
+
+function Carousel(props) {
+  const [img, setImg] = useState(0);
+
+  function left() {
+    if (props.imgs[img-1] === undefined) {
+      setImg(props.imgs.length-1);
+    } else {
+      setImg(img - 1);
+    }
+  }
+
+  function right() {
+    if (props.imgs[img+1] === undefined) {
+      setImg(0);
+    } else {
+      setImg(img + 1);
+    }
+  }
+  return (
+    <div>
+    <button onClick={left}>Left</button> 
+    <img src={props.imgs[img]} alt="people" /> 
+    <button onClick={right}>Right</button>
+    </div>
+    
+  )
+}
+
+
+function NumbersTable(props) {
+  let result = [];
+  for (let i = 1; i <= props.limit; i++){
+    let color;
+    if (i%2 !== 0){
+      color = 'white';
+    } else {
+      color = 'red';
+    }
+    result.push(
+      <div
+      style={{
+        height: '50px',
+        width: '50px',
+        textAlign: 'center',
+        lineHeight: '50px',
+        display: 'inline-block',
+        backgroundColor: color,
+        border: '1px solid black'
+      }}
+      key={'numberTable'+i}
+      >{i}</div>
+    );
+  }
+  return (
+    <div>
+     {result} 
+    </div>
+  );
+}
+
+function Facebook(props) {
+  
+}
+
 
 export default App;
