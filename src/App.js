@@ -82,6 +82,7 @@ function App() {
   ]}
 />
     <NumbersTable limit={90} />
+    <Facebook />
   </div>
   )
 }
@@ -294,8 +295,17 @@ function NumbersTable(props) {
   );
 }
 
-function Facebook(props) {
-  
+function Facebook() {
+  return profiles.map((eachProfile) => {
+    return (
+      <div className="IdCard box">
+        <li><img src={eachProfile.img} alt="img"/></li>
+        <li>{eachProfile.firstName}</li>
+        <li>{eachProfile.lastName}</li>
+        <li>{eachProfile.country}</li>
+      </div>
+    )
+  })
 }
 
 

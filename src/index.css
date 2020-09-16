@@ -17,6 +17,7 @@ code {
   margin: 10px 0;
   display: flex;
   flex-direction: column;
+  list-style: none;
 }
 
 .IdCard img {
